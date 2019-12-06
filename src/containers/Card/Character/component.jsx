@@ -16,7 +16,7 @@ const Character = ({
   const getDate = (value) => moment(value).format('DD/MM/YYYY, hh:mm:ss')
   const date = useMemo(() => getDate(selectedCharacter.created), [selectedCharacter.created])
   return (
-    <Container>
+    <Container className="container">
       <h1>CHARACTER</h1>
       <Row className="cardRow">
         <Col className="imageCol" xs={{ span: 24 }} sm={{ span: 12 }} lg={{ span: 8 }}>
@@ -35,7 +35,7 @@ const Character = ({
                   && key !== 'url') {
                 return (
                   <Row key={key} className="cardTable">
-                    <Col className="cardCol" lg={{ span: 4 }} sm={{ span: 8 }}>
+                    <Col className="cardCol" lg={{ span: 5 }} sm={{ span: 8 }}>
                       {key}
                       :
                     </Col>

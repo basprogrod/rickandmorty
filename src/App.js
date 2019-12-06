@@ -6,7 +6,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { store, persistor } from '@/store/store'
 import Main from '@/containers/Main'
 import theme from '@/theme'
-import './App.css'
+import GlobalStyles from './style'
 
 function App() {
   return (
@@ -14,6 +14,7 @@ function App() {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <ThemeProvider theme={theme}>
+            <GlobalStyles />
             <Main />
           </ThemeProvider>
         </PersistGate>

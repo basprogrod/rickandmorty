@@ -1,4 +1,4 @@
-import { takeEvery, put, call } from 'redux-saga/effects'
+import { takeLatest, put, call } from 'redux-saga/effects'
 import { getCharacter, getLocation, getEpisode } from 'rickmortyapi'
 import {
   ACTION_TYPES,
@@ -9,7 +9,6 @@ import {
   actionPutDataToStore,
   actionPutCardDataToStore,
 } from '@/store/actions'
-
 
 function* getData(action) {
   const { payload } = action
@@ -99,7 +98,7 @@ function* getSearchData(action) {
 }
 
 export default function* watch() {
-  yield takeEvery(ACTION_TYPES.GET_DATA, getData)
-  yield takeEvery(ACTION_TYPES.GET_CARD_DATA, getCardData)
-  yield takeEvery(ACTION_TYPES.GET_SEARCH_DATA, getSearchData)
+  yield takeLatest(ACTION_TYPES.GET_DATA, getData)
+  yield takeLatest(ACTION_TYPES.GET_CARD_DATA, getCardData)
+  yield takeLatest(ACTION_TYPES.GET_SEARCH_DATA, getSearchData)
 }

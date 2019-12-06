@@ -1,13 +1,17 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import pt from 'prop-types'
+import qs from 'query-string'
 import {
   Row, Col, Layout, Input,
   Pagination, Table, Button,
 } from 'antd'
 import 'antd/dist/antd.css'
+import { useHistory } from 'react-router-dom'
 import Container from './styles'
 import CustomSelect from './CustomSelect'
-import { INCLUDE } from '@/constants'
+import {
+  INCLUDE, PATH, FIRST_PAGE, PAGE_SIZE,
+} from '@/constants'
 import tableInterface from './data'
 
 const TableWrap = (props) => {
@@ -16,13 +20,54 @@ const TableWrap = (props) => {
     episodes,
     locations,
     characters,
-    getData,
-    getSearachData,
+    getSearchData,
   } = props
-  const [currentPage, setCurrentPage] = useState(1)
+  const numberPage = Number(pathname.slice(pathname.lastIndexOf('/') + 1))
+  const history = useHistory()
+  const isQueryString = !!Object.keys(qs.parse(history.location.search)).length
+  const [currentPage, setCurrentPage] = useState(numberPage)
   const [searchString, setSearchString] = useState('')
   const [searchField, setSearchField] = useState('name')
   const hendleSelectChenge = useCallback((value) => setSearchField(value), [])
+
+  const setQueryToUrl = () => (isQueryString ? `?${searchField}=${searchString}` : '')
+
+  const setPath = (page, func, clear = false) => {
+    if (clear) {
+      if (pathname.includes(INCLUDE.LOCATIONS)) {
+        history.push(`${PATH.TABLE}/${INCLUDE.LOCATIONS}/${page}`)
+      }
+      if (pathname.includes(INCLUDE.CHARACTERS)) {
+        history.push(`${PATH.TABLE}/${INCLUDE.CHARACTERS}/${page}`)
+      }
+      if (pathname.includes(INCLUDE.EPISODES)) {
+        history.push(`${PATH.TABLE}/${INCLUDE.EPISODES}/${page}`)
+      }
+      return null
+    }
+    if (func) {
+      if (pathname.includes(INCLUDE.LOCATIONS)) {
+        history.push(`${PATH.TABLE}/${INCLUDE.LOCATIONS}/${page}${func()}`)
+      }
+      if (pathname.includes(INCLUDE.CHARACTERS)) {
+        history.push(`${PATH.TABLE}/${INCLUDE.CHARACTERS}/${page}${func()}`)
+      }
+      if (pathname.includes(INCLUDE.EPISODES)) {
+        history.push(`${PATH.TABLE}/${INCLUDE.EPISODES}/${page}${func()}`)
+      }
+    } else {
+      if (pathname.includes(INCLUDE.LOCATIONS)) {
+        history.push(`${PATH.TABLE}/${INCLUDE.LOCATIONS}/${page}?${searchField}=${searchString}`)
+      }
+      if (pathname.includes(INCLUDE.CHARACTERS)) {
+        history.push(`${PATH.TABLE}/${INCLUDE.CHARACTERS}/${page}?${searchField}=${searchString}`)
+      }
+      if (pathname.includes(INCLUDE.EPISODES)) {
+        history.push(`${PATH.TABLE}/${INCLUDE.EPISODES}/${page}?${searchField}=${searchString}`)
+      }
+    }
+    return null
+  }
 
   const setTableDataByPathName = () => {
     if (pathname.includes(INCLUDE.EPISODES)) {
@@ -43,9 +88,33 @@ const TableWrap = (props) => {
     ]
   }
 
+  const handleGetSearchData = () => {
+    if (isQueryString) {
+      getSearchData({
+        pathname,
+        query: {
+          ...qs.parse(history.location.search),
+          page: currentPage,
+        },
+      })
+    } else {
+      getSearchData({
+        pathname,
+        query: {
+          page: currentPage,
+        },
+      })
+    }
+  }
+
+  const handlePageChange = (page) => {
+    handleGetSearchData()
+    setPath(page, setQueryToUrl)
+    setCurrentPage(page)
+  }
+
   useEffect(() => {
-    setCurrentPage(1)
-    setSearchString('')
+    handleGetSearchData()
   }, [pathname])
 
   return (
@@ -72,23 +141,25 @@ const TableWrap = (props) => {
                 type="primary"
                 onClick={() => {
                   setSearchString('')
-                  getData({ pathname })
+                  getSearchData({ pathname })
+                  setPath(FIRST_PAGE, null, true)
+                  setCurrentPage(FIRST_PAGE)
                 }}
               >
-                Clear Serch
+                Clear Search
               </Button>
               <Input.Search
                 placeholder="input search text"
                 value={searchString}
                 onSearch={() => {
-                  getSearachData({
+                  setPath(currentPage)
+                  getSearchData({
                     pathname,
                     query: {
-                      [searchField]: searchString,
-                      page: 1,
+                      ...qs.parse(history.location.search),
                     },
                   })
-                  setCurrentPage(1)
+                  setCurrentPage(FIRST_PAGE)
                 }}
                 onChange={(e) => {
                   setSearchString(e.target.value)
@@ -109,22 +180,9 @@ const TableWrap = (props) => {
         <Pagination
           className="pagination"
           current={currentPage}
-          onChange={(page) => {
-            if (searchString) {
-              getSearachData({
-                pathname,
-                query: {
-                  [searchField]: searchString,
-                  page,
-                },
-              })
-            } else {
-              getData({ page, pathname })
-            }
-            setCurrentPage(page)
-          }}
+          onChange={handlePageChange}
           total={setTableDataByPathName()[1].info.count}
-          pageSize={20}
+          pageSize={PAGE_SIZE}
         />
       </Container>
     </Layout>
@@ -137,8 +195,7 @@ TableWrap.propTypes = {
   episodes: pt.shape(),
   locations: pt.shape(),
   characters: pt.shape(),
-  getData: pt.func,
-  getSearachData: pt.func,
+  getSearchData: pt.func,
 }
 TableWrap.defaultProps = {
   location: {},
@@ -146,8 +203,7 @@ TableWrap.defaultProps = {
   episodes: [],
   locations: [],
   characters: [],
-  getData: {},
-  getSearachData: {},
+  getSearchData: {},
 }
 
 export default TableWrap

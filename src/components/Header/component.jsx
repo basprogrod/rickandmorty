@@ -4,10 +4,12 @@ import { useHistory } from 'react-router-dom'
 import { Row, Col, Button } from 'antd'
 import 'antd/dist/antd.css'
 import StyledHeader from './styles'
+import { INCLUDE, PATH } from '@/constants'
 import logo from '@/assets/logo.png'
 
-const Header = ({ getData }) => {
+const Header = ({ getSearchData }) => {
   const history = useHistory()
+  const { location: { pathname } } = history
   return (
     <StyledHeader>
       <div className="container">
@@ -19,11 +21,11 @@ const Header = ({ getData }) => {
           </Col>
           <Col className="headerCol" xs={{ span: 7 }} xl={{ span: 2 }} sm={{ span: 4 }}>
             <Button
-              href="/tabele/episodes"
+              href="/"
               onClick={(e) => {
                 e.preventDefault()
-                getData()
-                history.push('/tabele/episodes')
+                getSearchData({ pathname })
+                history.push(`${PATH.TABLE}/${INCLUDE.EPISODES}/1`)
               }}
             >
               Episode
@@ -31,11 +33,11 @@ const Header = ({ getData }) => {
           </Col>
           <Col className="headerCol" xs={{ span: 7 }} xl={{ span: 2 }} sm={{ span: 4 }}>
             <Button
-              href="/tabele/locations"
+              href="/"
               onClick={(e) => {
                 e.preventDefault()
-                getData()
-                history.push('/tabele/locations')
+                getSearchData({ pathname })
+                history.push(`${PATH.TABLE}/${INCLUDE.LOCATIONS}/1`)
               }}
             >
               Location
@@ -43,11 +45,11 @@ const Header = ({ getData }) => {
           </Col>
           <Col className="headerCol" xs={{ span: 7 }} xl={{ span: 2 }} sm={{ span: 4 }}>
             <Button
-              href="/tabele/characters"
+              href="/"
               onClick={(e) => {
                 e.preventDefault()
-                getData()
-                history.push('/tabele/characters')
+                getSearchData({ pathname })
+                history.push(`${PATH.TABLE}/${INCLUDE.CHARACTERS}/1`)
               }}
             >
               Character
@@ -60,10 +62,10 @@ const Header = ({ getData }) => {
 }
 
 Header.propTypes = {
-  getData: pt.func,
+  getSearchData: pt.func,
 }
 Header.defaultProps = {
-  getData: () => {},
+  getSearchData: () => {},
 }
 
 export default Header

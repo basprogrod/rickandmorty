@@ -1,12 +1,7 @@
 import styled from 'styled-components'
 
 export default styled.div`
-  .container {
-    width: 100%;
-    max-width: 1120px;
-    background: ${({ theme }) => (theme.backgrounds.headerBg)};
-    margin: 0 auto;
-  }
+  
   .headerRow {
     padding: 15px 10px;
     display: flex;
@@ -28,7 +23,7 @@ export default styled.div`
     height: 100%;
     object-fit: cover;
   }
-  @media (max-width: 992px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints[1]}) {
     .headerRow {
       flex-direction: column;
       align-items: center;

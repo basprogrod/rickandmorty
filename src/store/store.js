@@ -19,7 +19,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, combineReducers)
 const middlewares = [
   sagaMiddlewere,
-  // logger,
+  logger,
 ]
 
 export const store = createStore(

@@ -1,5 +1,5 @@
 import React from 'react'
-import TableLink from '@/components/TableLink'
+import TableLink from './TableLink'
 
 
 const columnsEpisodes = [

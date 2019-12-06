@@ -1,15 +1,16 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import pt from 'prop-types'
+import { PATH } from '@/constants'
 
 const TableLink = ({ item, record, from }) => {
   const history = useHistory()
   return (
     <a
-      href="/card"
+      href="/"
       onClick={(e) => {
         e.preventDefault()
-        history.push(`/card:${from}?id=${record.id}`)
+        history.push(`${PATH.CARD}:${from}?id=${record.id}`)
       }}
     >
       {item}

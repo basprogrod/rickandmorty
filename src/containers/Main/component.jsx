@@ -8,20 +8,32 @@ import pt from 'prop-types'
 import TableWrap from '@/containers/TableWrap'
 import Header from '@/components/Header'
 import Card from '@/containers/Card'
+import { PATH, INCLUDE } from '@/constants'
 
-const Main = ({ getData, isGetData }) => {
+const Main = ({ getData, getSearchData, isGetData }) => {
   useEffect(() => {
-    getData()
+    if (!isGetData) {
+      getData()
+    }
   }, [isGetData, getData])
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Header getData={getData} />
+      <Header getSearchData={getSearchData} />
       <Switch>
-        { isGetData && <Route path="/tabele" component={TableWrap} />}
-        <Route path="/card:characters" component={Card} />
-        <Route path="/card:locations" component={Card} />
-        <Route path="/card:episodes" component={Card} />
-        <Redirect from="/" to="/tabele/episodes" />
+        {
+          isGetData
+            && <Route path={`${PATH.TABLE}`} component={TableWrap} />
+        }
+        <Route
+          path={
+            `${PATH.CARD}:${INCLUDE.EPISODES}`
+              || `${PATH.CARD}:${INCLUDE.LOCATIONS}`
+              || `${PATH.CARD}:${INCLUDE.CHARACTERS}`
+          }
+          component={Card}
+        />
+        <Redirect from="/" to={`${PATH.TABLE}/${INCLUDE.EPISODES}/1`} />
       </Switch>
     </Layout>
   )
@@ -30,10 +42,12 @@ const Main = ({ getData, isGetData }) => {
 Main.propTypes = {
   getData: pt.func,
   isGetData: pt.bool,
+  getSearchData: pt.func,
 }
 Main.defaultProps = {
-  getData: {},
+  getData: () => {},
   isGetData: false,
+  getSearchData: () => {},
 }
 
 export default withRouter(Main)

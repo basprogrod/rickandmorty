@@ -10,7 +10,7 @@ const Episodes = ({
   selectedEpisode,
   charactersByEpisode,
 }) => (
-  <Container>
+  <Container className="container">
     <h1>EPISODE</h1>
     <h2>Characters</h2>
     <Row className="cardRow">

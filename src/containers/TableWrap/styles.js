@@ -58,6 +58,7 @@ export default styled.div`
     border-radius: 10px;
     padding: 10px;
     .table {
+      height: 300px;
       overflow: auto;
       border: none;
       .ant-table-small {

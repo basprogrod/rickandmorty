@@ -13,7 +13,6 @@ const initialState = {
   residentsByLocation: [],
   selectedEpisode: {},
   charactersByEpisode: [],
-  currentPade: 1,
 }
 
 export default function uiReducer(state = initialState, action) {
@@ -42,6 +41,7 @@ export default function uiReducer(state = initialState, action) {
         selectedEpisode: {
           ...payload.selectedEpisode,
         },
+        // isGetData: true,
       }
     default:
       return state

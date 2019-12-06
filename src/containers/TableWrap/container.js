@@ -16,11 +16,11 @@ const mapStateToProps = (state) => ({
   episodes: getEpisodes(state),
   locations: getLocations(state),
   characters: getCharacters(state),
-  // currentPage: state.uiReducer.currentPage,
+  isGetData: state.uiReducer.isGetData,
 })
 const mapDispatchToProps = (dispatch) => ({
   getData: (value) => dispatch(actionGetData(value)),
-  getSearachData: (value) => dispatch(actionGetSearchData(value)),
+  getSearchData: (value) => dispatch(actionGetSearchData(value)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main)

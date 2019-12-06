@@ -14,3 +14,10 @@ export const ACTION_TYPES = {
   PUT_EPISODES_BY_CHARACTER: 'PUT_EPISODES_BY_CHARACTER',
   GET_SEARCH_DATA: 'GET_SEARCH_DATA',
 }
+export const FIRST_PAGE = 1
+export const PAGE_SIZE = 20
+
+export const PATH = {
+  CARD: '/card',
+  TABLE: '/table',
+}

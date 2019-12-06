@@ -10,46 +10,58 @@ const CustomSelect = ({
   hendleChange,
   path,
 }) => (
-  <Select
-    defaultValue="name"
-    style={{ width: 100 }}
-    onChange={(value) => {
-      hendleChange(value)
-    }}
-  >
+  <>
     {
       path.includes(INCLUDE.CHARACTERS)
         && (
-          <OptGroup label="By column">
+          <Select
+            defaultValue="name"
+            style={{ width: 100 }}
+            onChange={(value) => {
+              hendleChange(value)
+            }}
+          >
             <Option value="name">Name</Option>
             <Option value="gender">Gender</Option>
             <Option value="species">Species</Option>
             <Option value="status">Status</Option>
             <Option value="type">Type</Option>
-          </OptGroup>
+          </Select>
         )
     }
     {
       path.includes(INCLUDE.LOCATIONS)
         && (
-          <OptGroup label="By column">
+          <Select
+            defaultValue="name"
+            style={{ width: 100 }}
+            onChange={(value) => {
+              hendleChange(value)
+            }}
+          >
             <Option value="name">Name</Option>
             <Option value="type">Type</Option>
             <Option value="dimension">Dimention</Option>
-          </OptGroup>
+          </Select>
         )
     }
     {
       path.includes(INCLUDE.EPISODES)
         && (
-          <OptGroup label="By column">
+          <Select
+            defaultValue="name"
+            style={{ width: 100 }}
+            onChange={(value) => {
+              hendleChange(value)
+            }}
+          >
             <Option value="name">Name</Option>
             <Option value="air_date">Created</Option>
             <Option value="episode">Episode</Option>
-          </OptGroup>
+          </Select>
         )
     }
-  </Select>
+  </>
 )
 
 CustomSelect.propTypes = {

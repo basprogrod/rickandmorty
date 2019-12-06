@@ -17,7 +17,7 @@ const Location = ({
   const date = useMemo(() => getDate(selectedLocation.created), [selectedLocation.created])
 
   return (
-    <Container>
+    <Container className="container">
       <h1>LOCATION</h1>
       <h2>Residents</h2>
       <Row className="cardRow">

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import pt from 'prop-types'
-
+import { PATH } from '@/constants'
 const CardLink = ({
   data,
   isLocations,
@@ -12,10 +12,12 @@ const CardLink = ({
   return (
     <a
       className={`link ${isLocations && 'inLocation'}`}
-      href="/card"
+      href="/"
       onClick={(e) => {
         e.preventDefault()
-        history.push(`/card:${forPath}?id=${data.url.slice(data.url.lastIndexOf('/') + 1)}`)
+        if (data.url) {
+          history.push(`${PATH.CARD}:${forPath}?id=${data.url.slice(data.url.lastIndexOf('/') + 1)}`)
+        }
       }}
     >
       {
