@@ -1,7 +1,29 @@
 import styled from 'styled-components'
+import { TEXT } from '@/constants'
 
 export default styled.div`
-  
+  .onError {
+    margin-top: 40px;
+  }
+  .searchInput {
+    position: relative;
+    input {
+      border: 1px solid ${({ theme }) => (theme.borders.colors.error)};
+      background: ${({ theme }) => (theme.borders.colors.error)};
+      color: ${({ theme }) => (theme.backgrounds.error)};
+    }
+    &::after {
+      position: absolute;
+      content: '${TEXT.NOT_FOUND}';
+      display: block;
+      top: -45px;
+      left: 61px;
+      border: 1px solid ${({ theme }) => (theme.borders.colors.error)};
+      color: ${({ theme }) => (theme.backgrounds.error)};
+      border-radius: 5px;
+      padding: 10px 5px;
+    }
+  }
   width: 100%;
   max-width: 1120px;
   margin: 0 auto;
@@ -73,5 +95,18 @@ export default styled.div`
     .searchBlock {
       justify-content: center;
     }
+    .searchInput {
+    &::after {
+      position: absolute;
+      content: 'not found!';
+      display: block;
+      top: -82px;
+      left: 61px;
+      border: 1px solid red;
+      color: red;
+      border-radius: 5px;
+      padding: 10px 5px;
+    }
+  }
   }
 `

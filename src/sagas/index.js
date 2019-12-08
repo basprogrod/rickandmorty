@@ -8,6 +8,7 @@ import {
 import {
   actionPutDataToStore,
   actionPutCardDataToStore,
+  actionErrorSearch,
 } from '@/store/actions'
 
 function* getData(action) {
@@ -77,18 +78,24 @@ function* getSearchData(action) {
       const character = yield call(getCharacter, payload.query)
       if (!character.status) {
         yield put(actionPutDataToStore({ character }))
+      } else {
+        yield put(actionErrorSearch())
       }
     }
     if (payload.pathname.includes(INCLUDE.LOCATIONS)) {
       const location = yield call(getLocation, payload.query)
       if (!location.status) {
         yield put(actionPutDataToStore({ location }))
+      } else {
+        yield put(actionErrorSearch())
       }
     }
     if (payload.pathname.includes(INCLUDE.EPISODES)) {
       const episode = yield call(getEpisode, payload.query)
       if (!episode.status) {
         yield put(actionPutDataToStore({ episode }))
+      } else {
+        yield put(actionErrorSearch())
       }
     }
   } catch (e) {

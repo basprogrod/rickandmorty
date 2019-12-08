@@ -6,6 +6,12 @@ export const actionGetData = (value) => ({
   type: ACTION_TYPES.GET_DATA,
   payload: value,
 })
+export const actionErrorSearch = () => ({
+  type: ACTION_TYPES.ON_NOT_FOUND,
+})
+export const actionInputChange = () => ({
+  type: ACTION_TYPES.INPUT_CHANGE,
+})
 export const actionGetSearchData = (value) => ({
   type: ACTION_TYPES.GET_SEARCH_DATA,
   payload: value,

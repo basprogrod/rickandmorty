@@ -10,7 +10,33 @@ export const getUiState = createSelector(
 
 export const getSelectedCharacter = createSelector(
   getUiState,
-  (state) => get(state, 'selectedCharacter', {}),
+  (state) => {
+    const data = get(state, 'selectedCharacter', {})
+    delete data.created
+    return data
+  },
+)
+
+export const getSelectedLocation = createSelector(
+  getUiState,
+  (state) => {
+    const data = get(state, 'selectedLocation', [])
+    delete data.created
+    return data
+  },
+)
+
+export const getSelectedEpisode = createSelector(
+  getUiState,
+  (state) => {
+    const data = get(state, 'selectedEpisode', {})
+    return {
+      date: data.air_date,
+      name: data.name,
+      episode: data.episode,
+      characters: data.characters,
+    }
+  },
 )
 
 export const getEpisodesByCharacter = createSelector(
@@ -36,11 +62,6 @@ export const getResidentsByLocation = createSelector(
   },
 )
 
-export const getSelectedLocation = createSelector(
-  getUiState,
-  (state) => get(state, 'selectedLocation', []),
-)
-
 export const getCharactersByEpisode = createSelector(
   getUiState,
   (state) => {
@@ -51,20 +72,6 @@ export const getCharactersByEpisode = createSelector(
     return data
   },
 )
-
-export const getSelectedEpisode = createSelector(
-  getUiState,
-  (state) => {
-    const data = get(state, 'selectedEpisode', {})
-    return {
-      date: data.air_date,
-      name: data.name,
-      episode: data.episode,
-      characters: data.characters,
-    }
-  },
-)
-
 
 export const getEpisodes = createSelector(
   getUiState,

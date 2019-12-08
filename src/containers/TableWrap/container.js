@@ -8,6 +8,7 @@ import {
 import {
   actionGetData,
   actionGetSearchData,
+  actionInputChange,
 } from '@/store/actions'
 
 import Main from './component'
@@ -17,10 +18,12 @@ const mapStateToProps = (state) => ({
   locations: getLocations(state),
   characters: getCharacters(state),
   isGetData: state.uiReducer.isGetData,
+  isErrorSearch: state.uiReducer.isErrorSearch,
 })
 const mapDispatchToProps = (dispatch) => ({
   getData: (value) => dispatch(actionGetData(value)),
   getSearchData: (value) => dispatch(actionGetSearchData(value)),
+  inputChange: () => dispatch(actionInputChange()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main)

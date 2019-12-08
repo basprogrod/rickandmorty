@@ -4,6 +4,7 @@ const BLACK = '#000'
 const LIGHT = '#f0f2f5'
 const DARK = '#323232'
 const GRAY = '#555'
+const RED = 'red'
 
 const breakpoints = ['992px', '700px']
 
@@ -13,6 +14,7 @@ export default {
     tableBg: WHITE,
     appBg: LIGHT,
     appBgDark: DARK,
+    error: RED,
   },
   cadrLink: {
     default: WHITE,
@@ -26,10 +28,16 @@ export default {
   textColors: {
     dark: DARK,
     gray: GRAY,
+    white: WHITE,
   },
   infoTable: {
     bg: WHITE,
     borederColor: BLACK,
+  },
+  borders: {
+    colors: {
+      error: RED,
+    },
   },
   breakpoints,
 }

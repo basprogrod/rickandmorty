@@ -21,7 +21,10 @@ const TableWrap = (props) => {
     locations,
     characters,
     getSearchData,
+    isErrorSearch,
+    inputChange,
   } = props
+  const handleInput = useCallback(() => inputChange(), [inputChange])
   const numberPage = Number(pathname.slice(pathname.lastIndexOf('/') + 1))
   const history = useHistory()
   const isQueryString = !!Object.keys(qs.parse(history.location.search)).length
@@ -136,7 +139,7 @@ const TableWrap = (props) => {
             }
           </h2>
           <Row className="tableHeader">
-            <Col className="searchBlock">
+            <Col className={`searchBlock ${isErrorSearch && 'onError'}`}>
               <Button
                 type="primary"
                 onClick={() => {
@@ -149,6 +152,7 @@ const TableWrap = (props) => {
                 Clear Search
               </Button>
               <Input.Search
+                className={isErrorSearch && 'searchInput'}
                 placeholder="input search text"
                 value={searchString}
                 onSearch={() => {
@@ -163,6 +167,7 @@ const TableWrap = (props) => {
                 }}
                 onChange={(e) => {
                   setSearchString(e.target.value)
+                  handleInput()
                 }}
                 style={{ width: 200 }}
               />
@@ -196,6 +201,8 @@ TableWrap.propTypes = {
   locations: pt.shape(),
   characters: pt.shape(),
   getSearchData: pt.func,
+  inputChange: pt.func,
+  isErrorSearch: pt.bool,
 }
 TableWrap.defaultProps = {
   location: {},
@@ -204,6 +211,8 @@ TableWrap.defaultProps = {
   locations: [],
   characters: [],
   getSearchData: {},
+  inputChange: {},
+  isErrorSearch: false,
 }
 
 export default TableWrap
