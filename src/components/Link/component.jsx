@@ -3,14 +3,14 @@ import { useHistory } from 'react-router-dom'
 import pt from 'prop-types'
 import { PATH } from '@/constants'
 
-const TableLink = ({ item, record, from }) => {
+const Link = ({ item, record, from }) => {
   const history = useHistory()
   return (
     <a
       href="/"
       onClick={(e) => {
         e.preventDefault()
-        history.push(`${PATH.CARD}:${from}?id=${record.id}`)
+        history.push(`${PATH.CARD}/${from}?id=${record.id}`)
       }}
     >
       {item}
@@ -18,17 +18,17 @@ const TableLink = ({ item, record, from }) => {
   )
 }
 
-TableLink.propTypes = {
+Link.propTypes = {
   item: pt.string,
   from: pt.string,
   record: pt.shape({
     id: pt.number,
   }),
 }
-TableLink.defaultProps = {
+Link.defaultProps = {
   item: '',
   record: {},
   from: '',
 }
 
-export default TableLink
+export default Link

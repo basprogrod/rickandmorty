@@ -2,15 +2,12 @@ import styled from 'styled-components'
 import { TEXT } from '@/constants'
 
 export default styled.div`
-  .onError {
-    margin-top: 40px;
-  }
   .searchInput {
     position: relative;
     input {
       border: 1px solid ${({ theme }) => (theme.borders.colors.error)};
       background: ${({ theme }) => (theme.borders.colors.error)};
-      color: ${({ theme }) => (theme.backgrounds.error)};
+      color: ${({ theme }) => (theme.textColors.white)};
     }
     &::after {
       position: absolute;
@@ -92,6 +89,9 @@ export default styled.div`
     height: 40px;
   }
   @media (max-width: ${({ theme }) => theme.breakpoints[1]}) {
+    .onError {
+    margin-top: 40px;
+    }
     .searchBlock {
       justify-content: center;
     }

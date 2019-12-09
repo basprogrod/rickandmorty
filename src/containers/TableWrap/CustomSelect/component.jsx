@@ -4,7 +4,7 @@ import { Select } from 'antd'
 import { INCLUDE } from '@/constants'
 import 'antd/dist/antd.css'
 
-const { Option, OptGroup } = Select
+const { Option } = Select
 
 const CustomSelect = ({
   hendleChange,

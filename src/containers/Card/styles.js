@@ -60,6 +60,7 @@ export default styled.div`
     .imageCol.episode {
       order: 1;
       margin-top: 25px;
+      justify-content: center;
     }
   }
   .infoTable {

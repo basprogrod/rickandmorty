@@ -25,15 +25,8 @@ const Main = ({ getData, getSearchData, isGetData }) => {
           isGetData
             && <Route path={`${PATH.TABLE}`} component={TableWrap} />
         }
-        <Route
-          path={
-            `${PATH.CARD}:${INCLUDE.EPISODES}`
-              || `${PATH.CARD}:${INCLUDE.LOCATIONS}`
-              || `${PATH.CARD}:${INCLUDE.CHARACTERS}`
-          }
-          component={Card}
-        />
-        <Redirect from="/" to={`${PATH.TABLE}/${INCLUDE.EPISODES}/1`} />
+        <Route path={PATH.CARD} component={Card} />
+        <Redirect exact from="/" to={`${PATH.TABLE}/${INCLUDE.EPISODES}/1`} />
       </Switch>
     </Layout>
   )

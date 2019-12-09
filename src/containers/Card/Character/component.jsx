@@ -1,20 +1,18 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import pt from 'prop-types'
-import {
-  Row, Col,
-} from 'antd'
-import moment from 'moment'
+import { Row, Col } from 'antd'
 import 'antd/dist/antd.css'
 import Container from '../styles'
 import CardLink from '../CardLink'
 import INTERFACES from '@/prop-types'
+import Link from '@/components/Link'
+import { INCLUDE } from '@/constants'
 
 const Character = ({
   selectedCharacter,
   episodesByCharacter,
 }) => {
-  const getDate = (value) => moment(value).format('DD/MM/YYYY, hh:mm:ss')
-  const date = useMemo(() => getDate(selectedCharacter.created), [selectedCharacter.created])
+  const getLocationsId = (locationUrl) => Number(locationUrl.slice(locationUrl.lastIndexOf('/') + 1))
   return (
     <Container className="container">
       <h1>CHARACTER</h1>
@@ -40,7 +38,25 @@ const Character = ({
                       :
                     </Col>
                     <Col className="cardCol">
-                      { key === 'created' ? date : selectedCharacter[key] }
+                      { selectedCharacter[key] }
+                    </Col>
+                  </Row>
+                )
+              }
+
+              if (key === 'location') {
+                return (
+                  <Row key={selectedCharacter[key].name} className="cardTable">
+                    <Col className="cardCol" lg={{ span: 5 }} sm={{ span: 8 }}>
+                      {key}
+                      :
+                    </Col>
+                    <Col className="cardCol">
+                      <Link
+                        from={INCLUDE.LOCATIONS}
+                        record={{ id: getLocationsId(selectedCharacter[key].url) }}
+                        item={selectedCharacter[key].name}
+                      />
                     </Col>
                   </Row>
                 )
