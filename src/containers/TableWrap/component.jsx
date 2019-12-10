@@ -5,7 +5,6 @@ import {
   Row, Col, Layout, Input,
   Pagination, Table, Button,
 } from 'antd'
-import 'antd/dist/antd.css'
 import { useHistory } from 'react-router-dom'
 import Container from './styles'
 import CustomSelect from './CustomSelect'
@@ -139,7 +138,7 @@ const TableWrap = (props) => {
             }
           </h2>
           <Row className="tableHeader">
-            <Col className={`searchBlock ${isErrorSearch && 'onError'}`}>
+            <Col span={24} className={`searchBlock ${isErrorSearch && 'onError'}`}>
               <Button
                 type="primary"
                 onClick={() => {

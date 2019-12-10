@@ -2,7 +2,7 @@ import React from 'react'
 import pt from 'prop-types'
 import { Select } from 'antd'
 import { INCLUDE } from '@/constants'
-import 'antd/dist/antd.css'
+import StyledSelect from './style'
 
 const { Option } = Select
 
@@ -10,13 +10,12 @@ const CustomSelect = ({
   hendleChange,
   path,
 }) => (
-  <>
+  <StyledSelect>
     {
       path.includes(INCLUDE.CHARACTERS)
         && (
           <Select
             defaultValue="name"
-            style={{ width: 100 }}
             onChange={(value) => {
               hendleChange(value)
             }}
@@ -34,7 +33,6 @@ const CustomSelect = ({
         && (
           <Select
             defaultValue="name"
-            style={{ width: 100 }}
             onChange={(value) => {
               hendleChange(value)
             }}
@@ -50,7 +48,6 @@ const CustomSelect = ({
         && (
           <Select
             defaultValue="name"
-            style={{ width: 100 }}
             onChange={(value) => {
               hendleChange(value)
             }}
@@ -61,7 +58,7 @@ const CustomSelect = ({
           </Select>
         )
     }
-  </>
+  </StyledSelect>
 )
 
 CustomSelect.propTypes = {

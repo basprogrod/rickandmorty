@@ -10,6 +10,9 @@ const breakpoints = ['992px', '700px']
 
 export default {
   backgrounds: {
+    colors: {
+      white: WHITE,
+    },
     headerBg: LIGHT_ACUA,
     tableBg: WHITE,
     appBg: LIGHT,

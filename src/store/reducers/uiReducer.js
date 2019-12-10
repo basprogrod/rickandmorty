@@ -5,6 +5,7 @@ import {
 const initialState = {
   isGetData: false,
   isErrorSearch: false,
+  isShowLoader: true,
   episode: {},
   location: {},
   character: {},
@@ -26,6 +27,7 @@ export default function uiReducer(state = initialState, action) {
         ...payload,
         isGetData: true,
         isErrorSearch: false,
+        isShowLoader: false,
       }
 
     case ACTION_TYPES.PUT_CARD_DATA:
@@ -44,16 +46,24 @@ export default function uiReducer(state = initialState, action) {
           ...payload.selectedEpisode,
         },
         isErrorSearch: false,
+        isShowLoader: false,
       }
     case ACTION_TYPES.ON_NOT_FOUND:
       return {
         ...state,
         isErrorSearch: true,
+        isShowLoader: false,
       }
     case ACTION_TYPES.INPUT_CHANGE:
       return {
         ...state,
         isErrorSearch: false,
+        isShowLoader: false,
+      }
+    case ACTION_TYPES.SHOW_LOADER:
+      return {
+        ...state,
+        isShowLoader: true,
       }
     default:
       return state

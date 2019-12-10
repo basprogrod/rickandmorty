@@ -8,6 +8,18 @@ export const getUiState = createSelector(
   (state) => get(state, 'uiReducer', {}),
 )
 
+export const getIsShowLoaderFlag = createSelector(
+  getUiState,
+  (state) => get(state, 'isShowLoader', {}),
+)
+export const getIsErrorSearchFlag = createSelector(
+  getUiState,
+  (state) => get(state, 'isErrorSearch', {}),
+)
+export const getIsGetDataFlag = createSelector(
+  getUiState,
+  (state) => get(state, 'isGetData', {}),
+)
 export const getSelectedCharacter = createSelector(
   getUiState,
   (state) => {

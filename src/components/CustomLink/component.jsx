@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import pt from 'prop-types'
 import { PATH } from '@/constants'
 
-const Link = ({ item, record, from }) => {
+const CustomLink = ({ item, record, from }) => {
   const history = useHistory()
   return (
     <a
@@ -18,17 +18,17 @@ const Link = ({ item, record, from }) => {
   )
 }
 
-Link.propTypes = {
+CustomLink.propTypes = {
   item: pt.string,
   from: pt.string,
   record: pt.shape({
     id: pt.number,
   }),
 }
-Link.defaultProps = {
+CustomLink.defaultProps = {
   item: '',
   record: {},
   from: '',
 }
 
-export default Link
+export default CustomLink

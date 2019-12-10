@@ -1,9 +1,17 @@
 import { connect } from 'react-redux'
-import { actionGetSearchData, actionGetData } from '@/store/actions'
+import {
+  actionGetSearchData,
+  actionGetData,
+} from '@/store/actions'
+import {
+  getIsShowLoaderFlag,
+  getIsGetDataFlag,
+} from '@/store/selectors'
 import Main from './component'
 
 const mapStateToProps = (state) => ({
-  isGetData: state.uiReducer.isGetData,
+  isGetData: getIsGetDataFlag(state),
+  isShowLoader: getIsShowLoaderFlag(state),
 })
 const mapDispatchToProps = (dispatch) => ({
   getSearchData: (value) => dispatch(actionGetSearchData(value)),

@@ -9,6 +9,7 @@ import {
   actionPutDataToStore,
   actionPutCardDataToStore,
   actionErrorSearch,
+  actionShowLoader,
 } from '@/store/actions'
 
 function* getData(action) {
@@ -17,6 +18,8 @@ function* getData(action) {
     let episode
     let location
     let character
+
+    yield put(actionShowLoader())
 
     if (action.payload) {
       if (payload.pathname.includes(INCLUDE.EPISODES)) {
@@ -50,6 +53,7 @@ function* getData(action) {
 function* getCardData(action) {
   const { payload } = action
   try {
+    yield put(actionShowLoader())
     if (payload.path === INCLUDE.CHARACTERS) {
       const selectedCharacter = yield call(getCharacter, payload.id)
       const episodesByCharacter = yield call(getEpisode, payload.data)

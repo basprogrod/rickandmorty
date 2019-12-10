@@ -3,14 +3,19 @@ import {
   Route, Switch, withRouter, Redirect,
 } from 'react-router-dom'
 import { Layout } from 'antd'
-import 'antd/dist/antd.css'
 import pt from 'prop-types'
 import TableWrap from '@/containers/TableWrap'
 import Header from '@/components/Header'
+import Loader from '@/components/Loader'
 import Card from '@/containers/Card'
 import { PATH, INCLUDE } from '@/constants'
 
-const Main = ({ getData, getSearchData, isGetData }) => {
+const Main = ({
+  getData,
+  getSearchData,
+  isGetData,
+  isShowLoader,
+}) => {
   useEffect(() => {
     if (!isGetData) {
       getData()
@@ -20,10 +25,11 @@ const Main = ({ getData, getSearchData, isGetData }) => {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Header getSearchData={getSearchData} />
+      {isShowLoader && <Loader isShow={isShowLoader} />}
       <Switch>
         {
-          isGetData
-            && <Route path={`${PATH.TABLE}`} component={TableWrap} />
+        isGetData
+        && <Route path={`${PATH.TABLE}`} component={TableWrap} />
         }
         <Route path={PATH.CARD} component={Card} />
         <Redirect exact from="/" to={`${PATH.TABLE}/${INCLUDE.EPISODES}/1`} />
@@ -35,12 +41,14 @@ const Main = ({ getData, getSearchData, isGetData }) => {
 Main.propTypes = {
   getData: pt.func,
   isGetData: pt.bool,
+  isShowLoader: pt.bool,
   getSearchData: pt.func,
 }
 Main.defaultProps = {
   getData: () => {},
   isGetData: false,
   getSearchData: () => {},
+  isShowLoader: true,
 }
 
 export default withRouter(Main)

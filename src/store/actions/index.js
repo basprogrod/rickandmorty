@@ -9,6 +9,9 @@ export const actionGetData = (value) => ({
 export const actionErrorSearch = () => ({
   type: ACTION_TYPES.ON_NOT_FOUND,
 })
+export const actionShowLoader = () => ({
+  type: ACTION_TYPES.SHOW_LOADER,
+})
 export const actionInputChange = () => ({
   type: ACTION_TYPES.INPUT_CHANGE,
 })

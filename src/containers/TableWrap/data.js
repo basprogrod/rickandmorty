@@ -1,5 +1,5 @@
 import React from 'react'
-import Link from '@/components/Link'
+import CustomLink from '@/components/CustomLink'
 
 
 const columnsEpisodes = [
@@ -10,7 +10,7 @@ const columnsEpisodes = [
   {
     title: 'Name',
     dataIndex: 'name',
-    render: (item, record) => <Link item={item} record={record} from="episodes" />,
+    render: (item, record) => <CustomLink item={item} record={record} from="episodes" />,
   },
   {
     title: 'Create date',
@@ -30,7 +30,7 @@ const columnsLocations = [
   {
     title: 'Name',
     dataIndex: 'name',
-    render: (item, record) => <Link item={item} record={record} from="locations" />,
+    render: (item, record) => <CustomLink item={item} record={record} from="locations" />,
   },
   {
     title: 'Type',
@@ -49,7 +49,7 @@ const columnsCharacters = [
   {
     title: 'Name',
     dataIndex: 'name',
-    render: (item, record) => <Link item={item} record={record} from="characters" />,
+    render: (item, record) => <CustomLink item={item} record={record} from="characters" />,
   },
   {
     title: 'Gender',

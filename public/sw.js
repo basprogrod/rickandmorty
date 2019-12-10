@@ -5,7 +5,7 @@ const cacheName = 'mysite-dynamic'
 const HEADER_NAME = 'last-update'
 const TIMER = 500000
 self.addEventListener('fetch', (event) => {
-  console.log("TCL: event.request.url", event.request.url)
+  // console.log("TCL: event.request.url", event.request.url)
   event.respondWith(
     caches.open(cacheName)
       .then((cache) => cache.match(event.request.url)

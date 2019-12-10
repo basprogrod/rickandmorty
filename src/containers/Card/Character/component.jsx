@@ -5,7 +5,7 @@ import 'antd/dist/antd.css'
 import Container from '../styles'
 import CardLink from '../CardLink'
 import INTERFACES from '@/prop-types'
-import Link from '@/components/Link'
+import CustomLink from '@/components/CustomLink'
 import { INCLUDE } from '@/constants'
 
 const Character = ({
@@ -52,7 +52,7 @@ const Character = ({
                       :
                     </Col>
                     <Col className="cardCol">
-                      <Link
+                      <CustomLink
                         from={INCLUDE.LOCATIONS}
                         record={{ id: getLocationsId(selectedCharacter[key].url) }}
                         item={selectedCharacter[key].name}
