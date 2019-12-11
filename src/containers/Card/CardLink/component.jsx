@@ -2,6 +2,7 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 import pt from 'prop-types'
 import { PATH } from '@/constants'
+import getNumberFromUrl from '@/helpers'
 
 const CardLink = ({
   data,
@@ -17,7 +18,7 @@ const CardLink = ({
       onClick={(e) => {
         e.preventDefault()
         if (data.url) {
-          history.push(`${PATH.CARD}/${forPath}?id=${data.url.slice(data.url.lastIndexOf('/') + 1)}`)
+          history.push(`${PATH.CARD}/${forPath}?id=${getNumberFromUrl(data.url)}`)
         }
       }}
     >

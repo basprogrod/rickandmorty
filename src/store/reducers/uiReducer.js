@@ -4,16 +4,17 @@ import {
 
 const initialState = {
   isGetData: false,
+  isGetCardData: false,
   isErrorSearch: false,
   isShowLoader: true,
   episode: {},
   location: {},
   character: {},
-  selectedCharacter: {},
-  episodesByCharacter: [],
-  selectedLocation: {},
-  residentsByLocation: [],
   selectedEpisode: {},
+  selectedCharacter: {},
+  selectedLocation: {},
+  episodesByCharacter: [],
+  residentsByLocation: [],
   charactersByEpisode: [],
 }
 
@@ -47,6 +48,7 @@ export default function uiReducer(state = initialState, action) {
         },
         isErrorSearch: false,
         isShowLoader: false,
+        isGetCardData: true,
       }
     case ACTION_TYPES.ON_NOT_FOUND:
       return {
@@ -64,6 +66,7 @@ export default function uiReducer(state = initialState, action) {
       return {
         ...state,
         isShowLoader: true,
+        isGetCardData: false,
       }
     default:
       return state

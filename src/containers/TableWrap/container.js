@@ -18,7 +18,6 @@ const mapStateToProps = (state) => ({
   episodes: getEpisodes(state),
   locations: getLocations(state),
   characters: getCharacters(state),
-  isGetData: state.uiReducer.isGetData,
   isErrorSearch: getIsErrorSearchFlag(state),
 })
 const mapDispatchToProps = (dispatch) => ({

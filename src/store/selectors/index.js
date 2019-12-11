@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect'
 import get from 'lodash/get'
+import getNumberFromUrl from '@/helpers'
 
 export const getState = (state) => (state)
 
@@ -8,17 +9,21 @@ export const getUiState = createSelector(
   (state) => get(state, 'uiReducer', {}),
 )
 
+export const getIsGetCardDataFlag = createSelector(
+  getUiState,
+  (state) => get(state, 'isGetCardData', false),
+)
 export const getIsShowLoaderFlag = createSelector(
   getUiState,
-  (state) => get(state, 'isShowLoader', {}),
+  (state) => get(state, 'isShowLoader', false),
 )
 export const getIsErrorSearchFlag = createSelector(
   getUiState,
-  (state) => get(state, 'isErrorSearch', {}),
+  (state) => get(state, 'isErrorSearch', false),
 )
 export const getIsGetDataFlag = createSelector(
   getUiState,
-  (state) => get(state, 'isGetData', {}),
+  (state) => get(state, 'isGetData', false),
 )
 export const getSelectedCharacter = createSelector(
   getUiState,
@@ -32,7 +37,7 @@ export const getSelectedCharacter = createSelector(
 export const getSelectedLocation = createSelector(
   getUiState,
   (state) => {
-    const data = get(state, 'selectedLocation', [])
+    const data = get(state, 'selectedLocation', {})
     delete data.created
     return data
   },
@@ -89,7 +94,7 @@ export const getEpisodes = createSelector(
   getUiState,
   (state) => {
     const episodes = get(state, 'episode', {})
-    const results = episodes.results.map((item) => ({
+    const results = episodes.results && episodes.results.map((item) => ({
       id: item.id,
       key: item.id,
       name: item.name,
@@ -110,7 +115,7 @@ export const getLocations = createSelector(
   getUiState,
   (state) => {
     const locations = get(state, 'location', {})
-    const results = locations.results.map((item) => ({
+    const results = locations.results && locations.results.map((item) => ({
       id: item.id,
       key: item.id,
       name: item.name,
@@ -132,7 +137,7 @@ export const getCharacters = createSelector(
   getUiState,
   (state) => {
     const characters = get(state, 'character', {})
-    const results = characters.results.map((item) => ({
+    const results = characters.results && characters.results.map((item) => ({
       id: item.id,
       key: item.id,
       name: item.name,
@@ -158,15 +163,15 @@ export const getCharacters = createSelector(
 
 export const getArrayNumbersOfEpisodesByCharacter = createSelector(
   getSelectedCharacter,
-  (state) => get(state, 'episode', []).map((item) => +item.slice(item.lastIndexOf('/') + 1)),
+  (state) => get(state, 'episode', []).map((item) => getNumberFromUrl(item)),
 )
 
 export const getArrayNumbersOfResidentsByLocation = createSelector(
   getSelectedLocation,
-  (state) => get(state, 'residents', []).map((item) => +item.slice(item.lastIndexOf('/') + 1)),
+  (state) => get(state, 'residents', []).map((item) => getNumberFromUrl(item)),
 )
 
 export const getArrayNumbersOfCharactersByEpisode = createSelector(
   getSelectedEpisode,
-  (state) => get(state, 'characters', []).map((item) => +item.slice(item.lastIndexOf('/') + 1)),
+  (state) => get(state, 'characters', []).map((item) => getNumberFromUrl(item)),
 )

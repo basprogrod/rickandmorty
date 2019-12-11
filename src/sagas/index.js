@@ -1,4 +1,4 @@
-import { takeLatest, put, call } from 'redux-saga/effects'
+import { takeLatest, put, call, take, select, all, fork } from 'redux-saga/effects'
 import { getCharacter, getLocation, getEpisode } from 'rickmortyapi'
 import {
   ACTION_TYPES,
@@ -11,44 +11,6 @@ import {
   actionErrorSearch,
   actionShowLoader,
 } from '@/store/actions'
-
-function* getData(action) {
-  const { payload } = action
-  try {
-    let episode
-    let location
-    let character
-
-    yield put(actionShowLoader())
-
-    if (action.payload) {
-      if (payload.pathname.includes(INCLUDE.EPISODES)) {
-        episode = yield call(getEpisode, { page: payload.page })
-        yield put(actionPutDataToStore({ episode }))
-      }
-      if (payload.pathname.includes(INCLUDE.LOCATIONS)) {
-        location = yield call(getLocation, { page: payload.page })
-        yield put(actionPutDataToStore({ location }))
-      }
-      if (payload.pathname.includes(INCLUDE.CHARACTERS)) {
-        character = yield call(getCharacter, { page: payload.page })
-        yield put(actionPutDataToStore({ character }))
-      }
-    } else {
-      episode = yield call(getEpisode, { page: 1 })
-      location = yield call(getLocation, { page: 1 })
-      character = yield call(getCharacter, { page: 1 })
-      yield put(actionPutDataToStore({
-        episode,
-        location,
-        character,
-      }))
-    }
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log('TCL: function*getData -> episode', error)
-  }
-}
 
 function* getCardData(action) {
   const { payload } = action
@@ -108,8 +70,24 @@ function* getSearchData(action) {
   }
 }
 
-export default function* watch() {
-  yield takeLatest(ACTION_TYPES.GET_DATA, getData)
+function* watchAndLog() {
+  while (true) {
+    const action = yield take('PUT_CARD_DATA')
+    const state = yield select()
+
+    console.log('watchAndLogaction', action)
+    console.log('watchAndLogstate after', state)
+  }
+}
+
+function* watch() {
   yield takeLatest(ACTION_TYPES.GET_CARD_DATA, getCardData)
   yield takeLatest(ACTION_TYPES.GET_SEARCH_DATA, getSearchData)
+}
+
+export default function* rootSaga() {
+  yield all([
+    fork(watch),
+    fork(watchAndLog),
+  ])
 }

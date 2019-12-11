@@ -12,6 +12,7 @@ import {
   INCLUDE, PATH, FIRST_PAGE, PAGE_SIZE,
 } from '@/constants'
 import tableInterface from './data'
+import getNumberFromUrl from '@/helpers'
 
 const TableWrap = (props) => {
   const {
@@ -24,16 +25,14 @@ const TableWrap = (props) => {
     inputChange,
   } = props
   const handleInput = useCallback(() => inputChange(), [inputChange])
-  const numberPage = Number(pathname.slice(pathname.lastIndexOf('/') + 1))
+  const numberPage = getNumberFromUrl(pathname)
   const history = useHistory()
   const isQueryString = !!Object.keys(qs.parse(history.location.search)).length
   const [currentPage, setCurrentPage] = useState(numberPage)
   const [searchString, setSearchString] = useState('')
   const [searchField, setSearchField] = useState('name')
   const hendleSelectChenge = useCallback((value) => setSearchField(value), [])
-
   const setQueryToUrl = () => (isQueryString ? `?${searchField}=${searchString}` : '')
-
   const setPath = (page, func, clear = false) => {
     if (clear) {
       if (pathname.includes(INCLUDE.LOCATIONS)) {
@@ -90,7 +89,7 @@ const TableWrap = (props) => {
     ]
   }
 
-  const handleGetSearchData = () => {
+  const handleGetSearchData = useCallback(() => {
     if (isQueryString) {
       getSearchData({
         pathname,
@@ -107,7 +106,14 @@ const TableWrap = (props) => {
         },
       })
     }
-  }
+  }, [
+    isQueryString,
+    pathname,
+    history.location.search,
+    currentPage,
+    getSearchData,
+  ])
+
 
   const handlePageChange = (page) => {
     handleGetSearchData()
@@ -117,7 +123,7 @@ const TableWrap = (props) => {
 
   useEffect(() => {
     handleGetSearchData()
-  }, [pathname])
+  }, [handleGetSearchData])
 
   return (
     <Layout className="layout">
@@ -155,7 +161,7 @@ const TableWrap = (props) => {
                 placeholder="input search text"
                 value={searchString}
                 onSearch={() => {
-                  setPath(currentPage)
+                  setPath(FIRST_PAGE)
                   getSearchData({
                     pathname,
                     query: {

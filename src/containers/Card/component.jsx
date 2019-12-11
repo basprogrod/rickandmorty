@@ -11,6 +11,7 @@ import INTERFACES from '@/prop-types'
 
 const Card = ({
   getCardData,
+  isGetCardData,
   selectedCharacter,
   selectedLocation,
   selectedEpisode,
@@ -21,43 +22,52 @@ const Card = ({
   arrayNumbersOfResidentsByLocation,
   arrayNumbersOfCharactersByEpisode,
 }) => {
+  console.log("TCL: selectedCharacter", selectedCharacter)
   const history = useHistory()
   const { pathname } = history.location
-  const searchId = +qs.parse(history.location.search).id
-  const getCardDataCallback = useCallback((payload) => getCardData(payload), [
-    getCardData,
-  ])
-  useEffect(() => {
+  const searchId = Number(qs.parse(history.location.search).id)
+
+  const getCardDataCallback = useCallback(() => {
     if (pathname.includes(INCLUDE.CHARACTERS)) {
-      getCardDataCallback({
+      getCardData({
         path: INCLUDE.CHARACTERS,
         id: searchId,
         data: arrayNumbersOfEpisodesByCharacter,
       })
+      return
     }
     if (pathname.includes(INCLUDE.LOCATIONS)) {
-      getCardDataCallback({
+      getCardData({
         path: INCLUDE.LOCATIONS,
         id: searchId,
         data: arrayNumbersOfResidentsByLocation,
       })
+      return
     }
     if (pathname.includes(INCLUDE.EPISODES)) {
-      getCardDataCallback({
+      getCardData({
         path: INCLUDE.EPISODES,
         id: searchId,
         data: arrayNumbersOfCharactersByEpisode,
       })
     }
   }, [
+    getCardData,
     selectedCharacter.name,
     selectedLocation.name,
     selectedEpisode.name,
     pathname,
+    searchId,
+  ])
+
+  useEffect(() => {
+    getCardDataCallback()
+  }, [
+    getCardDataCallback,
   ])
 
   const renderCardByPath = (path) => {
-    if (path.includes(INCLUDE.CHARACTERS)) {
+    if (path.includes(INCLUDE.CHARACTERS) && isGetCardData) {
       return (
         <Character
           selectedCharacter={selectedCharacter}
@@ -65,12 +75,12 @@ const Card = ({
         />
       )
     }
-    if (path.includes(INCLUDE.LOCATIONS)) {
+    if (path.includes(INCLUDE.LOCATIONS) && isGetCardData) {
       return (
         <Location selectedLocation={selectedLocation} residentsByLocation={residentsByLocation} />
       )
     }
-    if (path.includes(INCLUDE.EPISODES)) {
+    if (path.includes(INCLUDE.EPISODES) && isGetCardData) {
       return (
         <Episodes selectedEpisode={selectedEpisode} charactersByEpisode={charactersByEpisode} />
       )
@@ -78,10 +88,11 @@ const Card = ({
     return null
   }
 
-  return renderCardByPath(pathname)
+  return isGetCardData && renderCardByPath(pathname)
 }
 
 Card.propTypes = {
+  isGetCardData: pt.bool,
   getCardData: pt.func,
   selectedCharacter: pt.shape(INTERFACES.SELECTED_CHARACTER),
   selectedLocation: pt.shape(INTERFACES.SELECTED_LOCATION),
@@ -94,6 +105,7 @@ Card.propTypes = {
   charactersByEpisode: pt.arrayOf(pt.shape()),
 }
 Card.defaultProps = {
+  isGetCardData: false,
   getCardData: {},
   selectedCharacter: {},
   selectedLocation: {},

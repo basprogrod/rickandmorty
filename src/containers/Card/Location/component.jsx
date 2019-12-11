@@ -16,6 +16,7 @@ const Location = ({
   const getDate = (value) => (moment(value).format('DD/MM/YYYY, hh:mm:ss'))
   const date = useMemo(() => getDate(selectedLocation.created), [selectedLocation.created])
 
+  
   return (
     <Container className="container">
       <h1>LOCATION</h1>

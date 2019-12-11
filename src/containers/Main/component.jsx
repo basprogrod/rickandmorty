@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import {
   Route, Switch, withRouter, Redirect,
 } from 'react-router-dom'
@@ -11,42 +11,25 @@ import Card from '@/containers/Card'
 import { PATH, INCLUDE } from '@/constants'
 
 const Main = ({
-  getData,
   getSearchData,
-  isGetData,
   isShowLoader,
-}) => {
-  useEffect(() => {
-    if (!isGetData) {
-      getData()
-    }
-  }, [isGetData, getData])
-
-  return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Header getSearchData={getSearchData} />
-      {isShowLoader && <Loader isShow={isShowLoader} />}
-      <Switch>
-        {
-        isGetData
-        && <Route path={`${PATH.TABLE}`} component={TableWrap} />
-        }
-        <Route path={PATH.CARD} component={Card} />
-        <Redirect exact from="/" to={`${PATH.TABLE}/${INCLUDE.EPISODES}/1`} />
-      </Switch>
-    </Layout>
-  )
-}
+}) => (
+  <Layout style={{ minHeight: '100vh' }}>
+    <Header getSearchData={getSearchData} />
+    {isShowLoader && <Loader isShow={isShowLoader} />}
+    <Switch>
+      <Route path={`${PATH.TABLE}`} component={TableWrap} />
+      <Route path={PATH.CARD} component={Card} />
+      <Redirect exact from="/" to={`${PATH.TABLE}/${INCLUDE.EPISODES}/1`} />
+    </Switch>
+  </Layout>
+)
 
 Main.propTypes = {
-  getData: pt.func,
-  isGetData: pt.bool,
   isShowLoader: pt.bool,
   getSearchData: pt.func,
 }
 Main.defaultProps = {
-  getData: () => {},
-  isGetData: false,
   getSearchData: () => {},
   isShowLoader: true,
 }

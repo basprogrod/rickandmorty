@@ -11,9 +11,9 @@ import {
   getArrayNumbersOfEpisodesByCharacter,
   getArrayNumbersOfResidentsByLocation,
   getArrayNumbersOfCharactersByEpisode,
+  getIsGetCardDataFlag,
 } from '@/store/selectors'
 import {
-  actionGetData,
   actionGetCardData,
 } from '@/store/actions'
 
@@ -27,9 +27,9 @@ const mapStateToProps = (state) => ({
   residentsByLocation: getResidentsByLocation(state),
   selectedEpisode: getSelectedEpisode(state),
   charactersByEpisode: getCharactersByEpisode(state),
+  isGetCardData: getIsGetCardDataFlag(state),
 })
 const mapDispatchToProps = (dispatch) => ({
-  getData: (value) => dispatch(actionGetData(value)),
   getCardData: (value) => dispatch(actionGetCardData(value)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Card)

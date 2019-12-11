@@ -7,12 +7,13 @@ import CardLink from '../CardLink'
 import INTERFACES from '@/prop-types'
 import CustomLink from '@/components/CustomLink'
 import { INCLUDE } from '@/constants'
+import getNumberFromUrl from '@/helpers'
 
 const Character = ({
   selectedCharacter,
   episodesByCharacter,
 }) => {
-  const getLocationsId = (locationUrl) => Number(locationUrl.slice(locationUrl.lastIndexOf('/') + 1))
+  const getLocationsId = (locationUrl) => getNumberFromUrl(locationUrl)
   return (
     <Container className="container">
       <h1>CHARACTER</h1>
@@ -94,3 +95,7 @@ Character.defaultProps = {
 }
 
 export default Character
+
+// export default React.memo(Character, (prevProps, nextProps) => {
+//   return nextProps.selectedCharacter.name === prevProps.selectedCharacter.name
+// })
