@@ -1,9 +1,8 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import pt from 'prop-types'
 import {
   Row, Col,
 } from 'antd'
-import moment from 'moment'
 import 'antd/dist/antd.css'
 import Container from '../styles'
 import CardLink from '../CardLink'
@@ -12,55 +11,49 @@ import INTERFACES from '@/prop-types'
 const Location = ({
   selectedLocation,
   residentsByLocation,
-}) => {
-  const getDate = (value) => (moment(value).format('DD/MM/YYYY, hh:mm:ss'))
-  const date = useMemo(() => getDate(selectedLocation.created), [selectedLocation.created])
-
-  
-  return (
-    <Container className="container">
-      <h1>LOCATION</h1>
-      <h2>Residents</h2>
-      <Row className="cardRow">
-        <Col className="imageCol episode">
-          {
-            residentsByLocation.map((resident) => (
+}) => (
+  <Container className="container">
+    <h1>LOCATION</h1>
+    <h2>Residents</h2>
+    <Row className="cardRow">
+      <Col className="imageCol episode">
+        {
+          (selectedLocation.residents && selectedLocation.residents.length === 0)
+            ? 'no residents'
+            : residentsByLocation.map((resident) => (
               <CardLink forPath="characters" key={resident.name + resident.id} isLocations data={resident} />
             ))
-          }
-        </Col>
-        <Col span={8} className="infoTable">
-          {
-            Object.keys(selectedLocation).map((key) => {
-              if (
-                (typeof selectedLocation[key] === 'string' || typeof selectedLocation[key] === 'number')
-                  && key !== 'key'
-                  && key !== 'id'
-                  && key !== 'url') {
-                return (
-                  <Row key={key} className="cardTable">
-                    <Col className="cardCol" span={6}>
-                      {key}
-                      :
-                    </Col>
-                    <Col className="cardCol">
-                      {
-                        key === 'created'
-                          ? date
-                          : selectedLocation[key]
-                      }
-                    </Col>
-                  </Row>
-                )
-              }
-              return null
-            })
-          }
-        </Col>
-      </Row>
-    </Container>
-  )
-}
+        }
+      </Col>
+      <Col span={8} className="infoTable">
+        {
+          Object.keys(selectedLocation).map((key) => {
+            if (
+              (typeof selectedLocation[key] !== 'object')
+                && key !== 'key'
+                && key !== 'id'
+                && key !== 'url') {
+              return (
+                <Row key={key} className="cardTable">
+                  <Col className="cardCol" span={6}>
+                    {key}
+                    :
+                  </Col>
+                  <Col className="cardCol">
+                    {
+                       selectedLocation[key]
+                    }
+                  </Col>
+                </Row>
+              )
+            }
+            return null
+          })
+        }
+      </Col>
+    </Row>
+  </Container>
+)
 
 Location.propTypes = {}
 Location.defaultProps = {}

@@ -19,7 +19,7 @@ const Header = ({ getSearchData }) => {
               <img className="logoImg" src={logo} alt="logo" />
             </div>
           </Col>
-          <Col className="headerCol" xs={{ span: 7 }} xl={{ span: 2 }} sm={{ span: 4 }}>
+          <Col className="headerCol" xs={{ span: 7 }} lg={{ span: 2 }} sm={{ span: 4 }}>
             <Button
               href="/"
               onClick={(e) => {
@@ -31,7 +31,7 @@ const Header = ({ getSearchData }) => {
               Episode
             </Button>
           </Col>
-          <Col className="headerCol" xs={{ span: 7 }} xl={{ span: 2 }} sm={{ span: 4 }}>
+          <Col className="headerCol" xs={{ span: 7 }} lg={{ span: 2 }} sm={{ span: 4 }}>
             <Button
               href="/"
               onClick={(e) => {
@@ -43,7 +43,7 @@ const Header = ({ getSearchData }) => {
               Location
             </Button>
           </Col>
-          <Col className="headerCol" xs={{ span: 7 }} xl={{ span: 2 }} sm={{ span: 4 }}>
+          <Col className="headerCol" xs={{ span: 7 }} lg={{ span: 2 }} sm={{ span: 4 }}>
             <Button
               href="/"
               onClick={(e) => {

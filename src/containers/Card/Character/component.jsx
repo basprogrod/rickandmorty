@@ -26,9 +26,8 @@ const Character = ({
         <Col span={10} className="infoTable">
           {
             Object.keys(selectedCharacter).map((key) => {
-              if ((typeof selectedCharacter[key] === 'string' || typeof selectedCharacter[key] === 'number')
+              if ((typeof selectedCharacter[key] !== 'object')
                   && key !== 'image'
-                  && key !== 'key'
                   && key !== 'id'
                   && selectedCharacter[key] !== ''
                   && key !== 'url') {

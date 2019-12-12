@@ -24,11 +24,7 @@ const Episodes = ({
       <Col span={8} className="infoTable">
         {
           Object.keys(selectedEpisode).map((key) => {
-            if (
-              (typeof selectedEpisode[key] === 'string' || typeof selectedEpisode[key] === 'number')
-                && key !== 'key'
-                && key !== 'id'
-                && key !== 'url') {
+            if (typeof selectedEpisode[key] !== 'object') {
               return (
                 <Row key={key} className="cardTable">
                   <Col className="cardCol" span={6}>

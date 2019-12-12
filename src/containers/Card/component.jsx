@@ -11,18 +11,13 @@ import INTERFACES from '@/prop-types'
 
 const Card = ({
   getCardData,
-  isGetCardData,
   selectedCharacter,
   selectedLocation,
   selectedEpisode,
   episodesByCharacter,
   residentsByLocation,
   charactersByEpisode,
-  arrayNumbersOfEpisodesByCharacter,
-  arrayNumbersOfResidentsByLocation,
-  arrayNumbersOfCharactersByEpisode,
 }) => {
-  console.log("TCL: selectedCharacter", selectedCharacter)
   const history = useHistory()
   const { pathname } = history.location
   const searchId = Number(qs.parse(history.location.search).id)
@@ -32,7 +27,6 @@ const Card = ({
       getCardData({
         path: INCLUDE.CHARACTERS,
         id: searchId,
-        data: arrayNumbersOfEpisodesByCharacter,
       })
       return
     }
@@ -40,7 +34,6 @@ const Card = ({
       getCardData({
         path: INCLUDE.LOCATIONS,
         id: searchId,
-        data: arrayNumbersOfResidentsByLocation,
       })
       return
     }
@@ -48,16 +41,12 @@ const Card = ({
       getCardData({
         path: INCLUDE.EPISODES,
         id: searchId,
-        data: arrayNumbersOfCharactersByEpisode,
       })
     }
   }, [
     getCardData,
-    selectedCharacter.name,
-    selectedLocation.name,
-    selectedEpisode.name,
-    pathname,
     searchId,
+    pathname,
   ])
 
   useEffect(() => {
@@ -67,7 +56,7 @@ const Card = ({
   ])
 
   const renderCardByPath = (path) => {
-    if (path.includes(INCLUDE.CHARACTERS) && isGetCardData) {
+    if (path.includes(INCLUDE.CHARACTERS)) {
       return (
         <Character
           selectedCharacter={selectedCharacter}
@@ -75,37 +64,38 @@ const Card = ({
         />
       )
     }
-    if (path.includes(INCLUDE.LOCATIONS) && isGetCardData) {
+    if (path.includes(INCLUDE.LOCATIONS)) {
       return (
-        <Location selectedLocation={selectedLocation} residentsByLocation={residentsByLocation} />
+        <Location
+          selectedLocation={selectedLocation}
+          residentsByLocation={residentsByLocation}
+        />
       )
     }
-    if (path.includes(INCLUDE.EPISODES) && isGetCardData) {
+    if (path.includes(INCLUDE.EPISODES)) {
       return (
-        <Episodes selectedEpisode={selectedEpisode} charactersByEpisode={charactersByEpisode} />
+        <Episodes
+          selectedEpisode={selectedEpisode}
+          charactersByEpisode={charactersByEpisode}
+        />
       )
     }
     return null
   }
 
-  return isGetCardData && renderCardByPath(pathname)
+  return renderCardByPath(pathname)
 }
 
 Card.propTypes = {
-  isGetCardData: pt.bool,
   getCardData: pt.func,
   selectedCharacter: pt.shape(INTERFACES.SELECTED_CHARACTER),
   selectedLocation: pt.shape(INTERFACES.SELECTED_LOCATION),
   selectedEpisode: pt.shape(INTERFACES.SELECTED_EPISODE),
-  arrayNumbersOfEpisodesByCharacter: pt.arrayOf(pt.number),
-  arrayNumbersOfResidentsByLocation: pt.arrayOf(pt.number),
-  arrayNumbersOfCharactersByEpisode: pt.arrayOf(pt.number),
   episodesByCharacter: pt.arrayOf(pt.shape()),
   residentsByLocation: pt.arrayOf(pt.shape()),
   charactersByEpisode: pt.arrayOf(pt.shape()),
 }
 Card.defaultProps = {
-  isGetCardData: false,
   getCardData: {},
   selectedCharacter: {},
   selectedLocation: {},
@@ -113,9 +103,6 @@ Card.defaultProps = {
   episodesByCharacter: [],
   residentsByLocation: [],
   charactersByEpisode: [],
-  arrayNumbersOfEpisodesByCharacter: [],
-  arrayNumbersOfResidentsByLocation: [],
-  arrayNumbersOfCharactersByEpisode: [],
 }
 
 export default Card

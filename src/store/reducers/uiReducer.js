@@ -4,7 +4,6 @@ import {
 
 const initialState = {
   isGetData: false,
-  isGetCardData: false,
   isErrorSearch: false,
   isShowLoader: true,
   episode: {},
@@ -48,7 +47,6 @@ export default function uiReducer(state = initialState, action) {
         },
         isErrorSearch: false,
         isShowLoader: false,
-        isGetCardData: true,
       }
     case ACTION_TYPES.ON_NOT_FOUND:
       return {
@@ -66,7 +64,6 @@ export default function uiReducer(state = initialState, action) {
       return {
         ...state,
         isShowLoader: true,
-        isGetCardData: false,
       }
     default:
       return state

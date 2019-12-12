@@ -10,6 +10,7 @@ export default styled.div`
   .headerCol {
     display: flex;
     align-items: center;
+    min-width: 100px;
     &.first {
       justify-content: center;
     }
@@ -23,10 +24,11 @@ export default styled.div`
     height: 100%;
     object-fit: cover;
   }
-  @media (max-width: ${({ theme }) => theme.breakpoints[1]}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints[0]}) {
     .headerRow {
       flex-direction: column;
       align-items: center;
+      justify-content: center;
     }
     .headerCol {
       display: flex;

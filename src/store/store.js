@@ -4,7 +4,7 @@ import { persistStore, persistReducer } from 'redux-persist'
 import createSagaModdlewere from 'redux-saga'
 import storage from 'redux-persist/lib/storage'
 import combineReducers from '@/store/reducers'
-import rootSaga from '@/sagas/'
+import watch from '@/sagas/'
 
 const sagaMiddlewere = createSagaModdlewere()
 const logger = createLogger({
@@ -29,4 +29,4 @@ export const store = createStore(
 
 export const persistor = persistStore(store)
 window.s = store.getState()
-sagaMiddlewere.run(rootSaga)
+sagaMiddlewere.run(watch)

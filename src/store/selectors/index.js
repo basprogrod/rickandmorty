@@ -1,17 +1,11 @@
 import { createSelector } from 'reselect'
 import get from 'lodash/get'
-import getNumberFromUrl from '@/helpers'
 
 export const getState = (state) => (state)
 
 export const getUiState = createSelector(
   getState,
   (state) => get(state, 'uiReducer', {}),
-)
-
-export const getIsGetCardDataFlag = createSelector(
-  getUiState,
-  (state) => get(state, 'isGetCardData', false),
 )
 export const getIsShowLoaderFlag = createSelector(
   getUiState,
@@ -28,16 +22,15 @@ export const getIsGetDataFlag = createSelector(
 export const getSelectedCharacter = createSelector(
   getUiState,
   (state) => {
-    const data = get(state, 'selectedCharacter', {})
+    const data = get(state, 'selectedCharacter', { episode: [] })
     delete data.created
     return data
   },
 )
-
 export const getSelectedLocation = createSelector(
   getUiState,
   (state) => {
-    const data = get(state, 'selectedLocation', {})
+    const data = get(state, 'selectedLocation', { residents: [] })
     delete data.created
     return data
   },
@@ -46,7 +39,7 @@ export const getSelectedLocation = createSelector(
 export const getSelectedEpisode = createSelector(
   getUiState,
   (state) => {
-    const data = get(state, 'selectedEpisode', {})
+    const data = get(state, 'selectedEpisode', { characters: [] })
     return {
       date: data.air_date,
       name: data.name,
@@ -158,20 +151,4 @@ export const getCharacters = createSelector(
       results,
     }
   },
-)
-
-
-export const getArrayNumbersOfEpisodesByCharacter = createSelector(
-  getSelectedCharacter,
-  (state) => get(state, 'episode', []).map((item) => getNumberFromUrl(item)),
-)
-
-export const getArrayNumbersOfResidentsByLocation = createSelector(
-  getSelectedLocation,
-  (state) => get(state, 'residents', []).map((item) => getNumberFromUrl(item)),
-)
-
-export const getArrayNumbersOfCharactersByEpisode = createSelector(
-  getSelectedEpisode,
-  (state) => get(state, 'characters', []).map((item) => getNumberFromUrl(item)),
 )
