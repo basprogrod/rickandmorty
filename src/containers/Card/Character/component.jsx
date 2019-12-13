@@ -13,6 +13,38 @@ const Character = ({
   selectedCharacter,
   episodesByCharacter,
 }) => {
+  const infoInterface = [
+    {
+      id: 1,
+      title: 'Name',
+      key: 'name',
+    },
+    {
+      id: 2,
+      title: 'Status',
+      key: 'status',
+    },
+    {
+      id: 3,
+      title: 'Species',
+      key: 'species',
+    },
+    {
+      id: 4,
+      title: 'Gender',
+      key: 'gender',
+    },
+    {
+      id: 5,
+      title: 'Type',
+      key: 'type',
+    },
+    {
+      id: 6,
+      title: 'Location',
+      key: 'location',
+    },
+  ]
   const getLocationsId = (locationUrl) => getNumberFromUrl(locationUrl)
   return (
     <Container className="container">
@@ -25,6 +57,38 @@ const Character = ({
         </Col>
         <Col span={10} className="infoTable">
           {
+            infoInterface.map((item) => {
+              if (item.key === 'location' && selectedCharacter[item.key]) {
+                return (
+                  <Row key={item.id} className="cardTable">
+                    <Col className="cardCol" lg={{ span: 5 }} sm={{ span: 8 }}>
+                      {item.key}
+                      :
+                    </Col>
+                    <Col className="cardCol">
+                      <CustomLink
+                        from={INCLUDE.LOCATIONS}
+                        record={{ id: getLocationsId(selectedCharacter[item.key].url) }}
+                        item={selectedCharacter[item.key].name}
+                      />
+                    </Col>
+                  </Row>
+                )
+              }
+              return (
+                <Row key={item.id} className="cardTable">
+                  <Col className="cardCol" lg={{ span: 5 }} sm={{ span: 8 }}>
+                    {item.title}
+                    :
+                  </Col>
+                  <Col className="cardCol">
+                    { selectedCharacter[item.key] }
+                  </Col>
+                </Row>
+              )
+            })
+          }
+          {/* {
             Object.keys(selectedCharacter).map((key) => {
               if ((typeof selectedCharacter[key] !== 'object')
                   && key !== 'image'
@@ -63,7 +127,7 @@ const Character = ({
               }
               return null
             })
-          }
+          } */}
         </Col>
       </Row>
       <Row>
@@ -94,7 +158,3 @@ Character.defaultProps = {
 }
 
 export default Character
-
-// export default React.memo(Character, (prevProps, nextProps) => {
-//   return nextProps.selectedCharacter.name === prevProps.selectedCharacter.name
-// })

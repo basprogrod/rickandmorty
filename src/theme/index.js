@@ -12,6 +12,7 @@ export default {
   backgrounds: {
     colors: {
       white: WHITE,
+      red: RED,
     },
     headerBg: LIGHT_ACUA,
     tableBg: WHITE,

@@ -34,4 +34,4 @@ Main.defaultProps = {
   isShowLoader: true,
 }
 
-export default withRouter(Main)
+export default React.memo(withRouter(Main))

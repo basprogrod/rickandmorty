@@ -56,7 +56,7 @@ const Card = ({
   ])
 
   const renderCardByPath = (path) => {
-    if (path.includes(INCLUDE.CHARACTERS)) {
+    if (path.includes(INCLUDE.CHARACTERS) && selectedCharacter.gender) {
       return (
         <Character
           selectedCharacter={selectedCharacter}

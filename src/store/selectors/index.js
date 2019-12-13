@@ -22,15 +22,22 @@ export const getIsGetDataFlag = createSelector(
 export const getSelectedCharacter = createSelector(
   getUiState,
   (state) => {
-    const data = get(state, 'selectedCharacter', { episode: [] })
-    delete data.created
-    return data
+    const data = get(state, 'selectedCharacter', {})
+    return {
+      gender: data.gender,
+      image: data.image,
+      location: data.location,
+      name: data.name,
+      species: data.species,
+      status: data.status,
+      type: data.type,
+    }
   },
 )
 export const getSelectedLocation = createSelector(
   getUiState,
   (state) => {
-    const data = get(state, 'selectedLocation', { residents: [] })
+    const data = get(state, 'selectedLocation', {})
     delete data.created
     return data
   },
@@ -39,7 +46,7 @@ export const getSelectedLocation = createSelector(
 export const getSelectedEpisode = createSelector(
   getUiState,
   (state) => {
-    const data = get(state, 'selectedEpisode', { characters: [] })
+    const data = get(state, 'selectedEpisode', {})
     return {
       date: data.air_date,
       name: data.name,

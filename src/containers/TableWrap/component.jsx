@@ -1,4 +1,6 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, {
+  useState, useCallback, useEffect, useRef,
+} from 'react'
 import pt from 'prop-types'
 import qs from 'query-string'
 import {
@@ -6,6 +8,7 @@ import {
   Pagination, Table, Button,
 } from 'antd'
 import { useHistory } from 'react-router-dom'
+import debounce from 'lodash/debounce'
 import Container from './styles'
 import CustomSelect from './CustomSelect'
 import {
@@ -22,17 +25,15 @@ const TableWrap = (props) => {
     characters,
     getSearchData,
     isErrorSearch,
-    inputChange,
   } = props
-  const handleInput = useCallback(() => inputChange(), [inputChange])
+  const inputRef = useRef(null)
   const numberPage = getNumberFromUrl(pathname)
   const history = useHistory()
   const isQueryString = !!Object.keys(qs.parse(history.location.search)).length
   const [currentPage, setCurrentPage] = useState(numberPage)
-  const [searchString, setSearchString] = useState('')
   const [searchField, setSearchField] = useState('name')
   const hendleSelectChenge = useCallback((value) => setSearchField(value), [])
-  const setQueryToUrl = () => (isQueryString ? `?${searchField}=${searchString}` : '')
+  const setQueryToUrl = () => (isQueryString ? `?${searchField}=${inputRef.current.input.input.value}` : '')
   const setPath = (page, func, clear = false) => {
     if (clear) {
       if (pathname.includes(INCLUDE.LOCATIONS)) {
@@ -58,13 +59,13 @@ const TableWrap = (props) => {
       }
     } else {
       if (pathname.includes(INCLUDE.LOCATIONS)) {
-        history.push(`${PATH.TABLE}/${INCLUDE.LOCATIONS}/${page}?${searchField}=${searchString}`)
+        history.push(`${PATH.TABLE}/${INCLUDE.LOCATIONS}/${page}?${searchField}=${inputRef.current.input.input.value}`)
       }
       if (pathname.includes(INCLUDE.CHARACTERS)) {
-        history.push(`${PATH.TABLE}/${INCLUDE.CHARACTERS}/${page}?${searchField}=${searchString}`)
+        history.push(`${PATH.TABLE}/${INCLUDE.CHARACTERS}/${page}?${searchField}=${inputRef.current.input.input.value}`)
       }
       if (pathname.includes(INCLUDE.EPISODES)) {
-        history.push(`${PATH.TABLE}/${INCLUDE.EPISODES}/${page}?${searchField}=${searchString}`)
+        history.push(`${PATH.TABLE}/${INCLUDE.EPISODES}/${page}?${searchField}=${inputRef.current.input.input.value}`)
       }
     }
     return null
@@ -121,6 +122,17 @@ const TableWrap = (props) => {
     setCurrentPage(page)
   }
 
+  const handleSearchDebounce = debounce(() => {
+    setPath(FIRST_PAGE)
+    getSearchData({
+      pathname,
+      query: {
+        ...qs.parse(history.location.search),
+      },
+    })
+    setCurrentPage(FIRST_PAGE)
+  }, 500)
+
   useEffect(() => {
     handleGetSearchData()
   }, [handleGetSearchData])
@@ -148,7 +160,6 @@ const TableWrap = (props) => {
               <Button
                 type="primary"
                 onClick={() => {
-                  setSearchString('')
                   getSearchData({ pathname })
                   setPath(FIRST_PAGE, null, true)
                   setCurrentPage(FIRST_PAGE)
@@ -157,9 +168,10 @@ const TableWrap = (props) => {
                 Clear Search
               </Button>
               <Input.Search
+                ref={inputRef}
                 className={isErrorSearch && 'searchInput'}
                 placeholder="input search text"
-                value={searchString}
+                // value={searchString}
                 onSearch={() => {
                   setPath(FIRST_PAGE)
                   getSearchData({
@@ -170,10 +182,7 @@ const TableWrap = (props) => {
                   })
                   setCurrentPage(FIRST_PAGE)
                 }}
-                onChange={(e) => {
-                  setSearchString(e.target.value)
-                  handleInput()
-                }}
+                onChange={handleSearchDebounce}
                 style={{ width: 200 }}
               />
               <CustomSelect hendleChange={hendleSelectChenge} path={pathname} />
@@ -206,7 +215,6 @@ TableWrap.propTypes = {
   locations: pt.shape(),
   characters: pt.shape(),
   getSearchData: pt.func,
-  inputChange: pt.func,
   isErrorSearch: pt.bool,
 }
 TableWrap.defaultProps = {
@@ -216,7 +224,6 @@ TableWrap.defaultProps = {
   locations: [],
   characters: [],
   getSearchData: {},
-  inputChange: {},
   isErrorSearch: false,
 }
 

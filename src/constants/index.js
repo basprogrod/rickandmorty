@@ -1,5 +1,4 @@
-export const API = process.env.REACT_APP_RICK_AND_MORTY_API
-export const LOGO = process.env.REACT_APP_RICK_AND_MORTY_LOGO
+export const LOGO = 'https://www.pngfind.com/pngs/m/16-165525_rick-and-morty-rick-and-morty-png-transparent.png'
 export const INCLUDE = {
   EPISODES: 'episodes',
   LOCATIONS: 'locations',

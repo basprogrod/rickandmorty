@@ -12,9 +12,6 @@ export const actionErrorSearch = () => ({
 export const actionShowLoader = () => ({
   type: ACTION_TYPES.SHOW_LOADER,
 })
-export const actionInputChange = () => ({
-  type: ACTION_TYPES.INPUT_CHANGE,
-})
 export const actionGetSearchData = (value) => ({
   type: ACTION_TYPES.GET_SEARCH_DATA,
   payload: value,
